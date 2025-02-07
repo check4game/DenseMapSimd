@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DenseMapSimd", "DenseMapSimd.vcxproj", "{E78B3A6D-1D27-4596-AD8F-C308A7380102}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		F1Deb|x64 = F1Deb|x64
+		F1Rel|x64 = F1Rel|x64
+		F2Rel|x64 = F2Rel|x64
+		NFRel|x64 = NFRel|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E78B3A6D-1D27-4596-AD8F-C308A7380102}.Debug|x64.ActiveCfg = Debug|x64
+		{E78B3A6D-1D27-4596-AD8F-C308A7380102}.Debug|x64.Build.0 = Debug|x64
+		{E78B3A6D-1D27-4596-AD8F-C308A7380102}.F1Deb|x64.ActiveCfg = F1Deb|x64
+		{E78B3A6D-1D27-4596-AD8F-C308A7380102}.F1Deb|x64.Build.0 = F1Deb|x64
+		{E78B3A6D-1D27-4596-AD8F-C308A7380102}.F1Rel|x64.ActiveCfg = F1Rel|x64
+		{E78B3A6D-1D27-4596-AD8F-C308A7380102}.F1Rel|x64.Build.0 = F1Rel|x64
+		{E78B3A6D-1D27-4596-AD8F-C308A7380102}.F2Rel|x64.ActiveCfg = F2Rel|x64
+		{E78B3A6D-1D27-4596-AD8F-C308A7380102}.F2Rel|x64.Build.0 = F2Rel|x64
+		{E78B3A6D-1D27-4596-AD8F-C308A7380102}.NFRel|x64.ActiveCfg = NFRel|x64
+		{E78B3A6D-1D27-4596-AD8F-C308A7380102}.NFRel|x64.Build.0 = NFRel|x64
+		{E78B3A6D-1D27-4596-AD8F-C308A7380102}.Release|x64.ActiveCfg = Release|x64
+		{E78B3A6D-1D27-4596-AD8F-C308A7380102}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

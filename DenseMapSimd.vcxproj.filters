@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="DenseMap.App.cpp" />
+    <ClCompile Include="DenseMap.App.Ver.cpp" />
+    <ClCompile Include="DenseHashMap.cpp" />
+    <ClCompile Include="DenseHashIndex.cpp" />
+    <ClCompile Include="DenseHashTable.cpp" />
+    <ClCompile Include="DenseMap.Add.cpp" />
+    <ClCompile Include="RandomGenerator.cpp" />
+    <ClCompile Include="DenseMap.GetOrRemove.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DenseMap.hpp" />
+  </ItemGroup>
+</Project>
