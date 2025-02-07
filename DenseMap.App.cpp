@@ -243,27 +243,27 @@ int main(int argc, char** argv)
         {
         case 0x01:
             ptr01.reset(new Type01((int32_t)data_set.size()));
-            std::cout << "-map, DenseHashMap<uint64_t, uint32_t>" << std::endl;
+            std::cout << "-map, DenseHashMap<uint64_t, uint32_t>::Add(key)" << std::endl;
             break;
         case 0x81:
             ptr81.reset(new Type81((int32_t)data_set.size()));
-            std::cout << "-map, DenseHashMap<uint32_t, uint32_t>" << std::endl;
+            std::cout << "-map, DenseHashMap<uint32_t, uint32_t>::Add(key)" << std::endl;
             break;
         case 0x02:
             ptr02.reset(new Type02((int32_t)data_set.size()));
-            std::cout << "-hi, DenseHashIndex<uint64_t>" << std::endl;
+            std::cout << "-hi, DenseHashIndex<uint64_t>::Add(key)" << std::endl;
             break;
         case 0x82:
             ptr82.reset(new Type82((int32_t)data_set.size()));
-            std::cout << "-hi, DenseHashIndex<uint32_t>" << std::endl;
+            std::cout << "-hi, DenseHashIndex<uint32_t>::Add(key)" << std::endl;
             break;
         case 0x04:
             ptr04.reset(new Type04((int32_t)data_set.size()));
-            std::cout << "-ht, DenseHashTable<uint64_t>" << std::endl;
+            std::cout << "-ht, DenseHashTable<uint64_t>::Add(key)" << std::endl;
             break;
         case 0x84:
             ptr84.reset(new Type84((int32_t)data_set.size()));
-            std::cout << "-ht, DenseHashTable<uint32_t>" << std::endl;
+            std::cout << "-ht, DenseHashTable<uint32_t>::Add(key)" << std::endl;
             break;
         }
 

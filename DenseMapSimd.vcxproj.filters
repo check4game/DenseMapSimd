@@ -40,6 +40,7 @@
     <Text Include="Results.1015\Ryzen 7 9700X.128.seq.ht.log">
       <Filter>Results.1015</Filter>
     </Text>
+    <Text Include="LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="x64\rar.bat">
@@ -51,5 +52,6 @@
     <None Include="x64\testSeq.bat">
       <Filter>X64</Filter>
     </None>
+    <None Include="README.md" />
   </ItemGroup>
 </Project>
