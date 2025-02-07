@@ -291,6 +291,19 @@
   <ItemGroup>
     <ClInclude Include="DenseMap.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Results.1015\i5-11500.128.rnd.ht.log" />
+    <Text Include="Results.1015\i5-11500.128.seq.ht.log" />
+    <Text Include="Results.1015\i7-10700K.128.rnd.ht.log" />
+    <Text Include="Results.1015\i7-10700K.128.seq.ht.log" />
+    <Text Include="Results.1015\Ryzen 7 9700X.128.rnd.ht.log" />
+    <Text Include="Results.1015\Ryzen 7 9700X.128.seq.ht.log" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="x64\rar.bat" />
+    <None Include="x64\testRnd.bat" />
+    <None Include="x64\testSeq.bat" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

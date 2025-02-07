@@ -13,4 +13,43 @@
   <ItemGroup>
     <ClInclude Include="DenseMap.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Results.1015">
+      <UniqueIdentifier>{b4f86890-6425-43f1-b50d-e473b0862cfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="X64">
+      <UniqueIdentifier>{94ecf10a-9c5f-4ec2-96d9-8a013310ed5d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Results.1015\i5-11500.128.rnd.ht.log">
+      <Filter>Results.1015</Filter>
+    </Text>
+    <Text Include="Results.1015\i5-11500.128.seq.ht.log">
+      <Filter>Results.1015</Filter>
+    </Text>
+    <Text Include="Results.1015\i7-10700K.128.rnd.ht.log">
+      <Filter>Results.1015</Filter>
+    </Text>
+    <Text Include="Results.1015\i7-10700K.128.seq.ht.log">
+      <Filter>Results.1015</Filter>
+    </Text>
+    <Text Include="Results.1015\Ryzen 7 9700X.128.rnd.ht.log">
+      <Filter>Results.1015</Filter>
+    </Text>
+    <Text Include="Results.1015\Ryzen 7 9700X.128.seq.ht.log">
+      <Filter>Results.1015</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="x64\rar.bat">
+      <Filter>X64</Filter>
+    </None>
+    <None Include="x64\testRnd.bat">
+      <Filter>X64</Filter>
+    </None>
+    <None Include="x64\testSeq.bat">
+      <Filter>X64</Filter>
+    </None>
+  </ItemGroup>
 </Project>
