@@ -3,12 +3,12 @@
 template <DENSE_TEMPLATE>
 DENSE_FUNCTION
 {
-    auto index = ToIndex(key);
+    uint64_t index = ToIndex(key);
 
-    const auto hashCode = IndexToHashCode(index);
+    const int8_t hashCode = __super::IndexToHashCode(index);
 
     // Initialize the probing jump distance to zero, which will increase with each probe iteration.
-    uint8_t jumpDistance = 0;
+    uint8_t jumpDistance = static_cast<uint8_t>(0);
 
     const auto target = _mm_set1_epi8(hashCode);
 
@@ -18,7 +18,7 @@ DENSE_FUNCTION
 
         const auto source = _mm_loadu_si128((const __m128i*)(__super::_controls + index));
 
-        auto resultMask = (uint64_t)_mm_movemask_epi8(_mm_cmpeq_epi8(source, target));
+        auto resultMask = static_cast<uint64_t>(_mm_movemask_epi8(_mm_cmpeq_epi8(source, target)));
 
     #if defined(DENSE_FIX1) || defined(DENSE_FIX2)
 
@@ -72,8 +72,9 @@ DENSE_FUNCTION
             resultMask = ResetLowestSetBit(resultMask);
         }
 
-        const auto emptyMask = (uint64_t)_mm_movemask_epi8(_mm_cmpeq_epi8(source, _mm_setzero_si128()));
-
+        uint64_t emptyMask = static_cast<uint64_t>(_mm_movemask_epi8(_mm_cmpeq_epi8(source, EMPTY_VECTOR)));
+        emptyMask |= static_cast<uint64_t>(_mm_movemask_epi8(_mm_cmpeq_epi8(source, DIRTY_VECTOR)));
+        
         if (emptyMask != 0)
         {
         #if defined(DENSE_FIX1)
@@ -83,7 +84,7 @@ DENSE_FUNCTION
             }
         #elif defined(DENSE_FIX2)
             // fix for 'old' cpu
-            index += FindFirstZero((uint64_t*)(__super::_controls + index));
+            index += __super::FindFirstEmptyOrDirty(reinterpret_cast<uint64_t*>(__super::_controls + index));
         #else
             index += TrailingZeroCount(emptyMask);
         #endif
@@ -117,7 +118,7 @@ DENSE_FUNCTION
         __super::PROBE_COUNTER++;
         #endif
 
-        jumpDistance += 16; // Increase the jump distance by 16 to probe the next cluster.
+        jumpDistance += __super::VECTOR_SIZE; // Increase the jump distance by 16 to probe the next cluster.
         index += jumpDistance; // Move the index forward by the jump distance.           
     }
 

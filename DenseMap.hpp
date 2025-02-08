@@ -3,13 +3,10 @@
 
 #include <stdint.h>
 #include <immintrin.h>
-#include <vector>
+#include <array>
 #include <memory>
 #include <string>
-
-#if defined(DENSE_DEBUG)
 #include <span>    
-#endif
 
 namespace MZ
 {
@@ -34,29 +31,6 @@ namespace MZ
         return _tzcnt_u64(value);
     }
 
-    static __forceinline int FindFirstZero(uint64_t* vector16)
-    {
-        if (((vector16[0] >> 0) & 0xFF) == 0) return 0;
-        if (((vector16[0] >> 8) & 0xFF) == 0) return 1;
-        if (((vector16[0] >> 16) & 0xFF) == 0) return 2;
-        if (((vector16[0] >> 24) & 0xFF) == 0) return 3;
-        if (((vector16[0] >> 32) & 0xFF) == 0) return 4;
-        if (((vector16[0] >> 40) & 0xFF) == 0) return 5;
-        if (((vector16[0] >> 48) & 0xFF) == 0) return 6;
-        if (((vector16[0] >> 56) & 0xFF) == 0) return 7;
-
-        if (((vector16[1] >> 0) & 0xFF) == 0) return 8;
-        if (((vector16[1] >> 8) & 0xFF) == 0) return 9;
-        if (((vector16[1] >> 16) & 0xFF) == 0) return 10;
-        if (((vector16[1] >> 24) & 0xFF) == 0) return 11;
-        if (((vector16[1] >> 32) & 0xFF) == 0) return 12;
-        if (((vector16[1] >> 40) & 0xFF) == 0) return 13;
-        if (((vector16[1] >> 48) & 0xFF) == 0) return 14;
-        if (((vector16[1] >> 56) & 0xFF) == 0) return 15;
-
-        return -1;
-    }
-
     static __forceinline uint64_t ToIndex(uint64_t key)
     {
         return static_cast<uint64_t>((key ^ (key >> 32)) * UINT64_C(11400714819323198485));
@@ -67,15 +41,18 @@ namespace MZ
         return static_cast<uint64_t>(key * UINT64_C(11400714819323198485));
     }
 
-    static __forceinline const char IndexToHashCode(uint64_t index)
-    {
-        return static_cast<char>((index >> 56) | 0x80);
-    }
-
     static __forceinline uint32_t RoundUpToPowerOf2(uint32_t value)
     {
         return static_cast<uint32_t>(UINT64_C(0x1'0000'0000) >> __lzcnt(value - 1));
     }
+
+    static const int8_t EMPTY_VALUE = static_cast<int8_t>(0x80);
+
+    static const auto EMPTY_VECTOR = _mm_set1_epi8(EMPTY_VALUE);
+
+    static const int8_t DIRTY_VALUE = static_cast<int8_t>(0x81);
+
+    static const auto DIRTY_VECTOR = _mm_set1_epi8(DIRTY_VALUE);
 
 #pragma pack(push, 1)
 
@@ -98,12 +75,15 @@ namespace MZ
     class DenseMap
     {
     public:
-        static const int32_t MIN_SIZE = 1024; // 1024
+        static const int32_t MIN_SIZE = 0x400; // 1024
         static const int32_t MAX_SIZE = 0x40000000; // 0x40000000 1'073'741'824
 
         void Clear() 
         {
-            _Count = 0; std::fill(_controlsPtr->begin(), _controlsPtr->end(), 0);
+            _Count = 0;
+
+            std::span span(_controls, _Capacity);
+            std::fill(span.begin(), span.end(), static_cast<int8_t>(EMPTY_VALUE));
 
         #if defined(DENSE_DEBUG)
             PROBE_COUNTER = CMP_COUNTER = 0;
@@ -111,21 +91,36 @@ namespace MZ
 
         }
 
-        int32_t Count() { return (int32_t)_Count; }
+        int32_t Count() const { return static_cast<int32_t>(_Count); }
 
-        int32_t Capacity() { return (int32_t)_Capacity;  }
+        int32_t Capacity() const { return static_cast<int32_t>(_Capacity);  }
 
     #if defined(DENSE_DEBUG)
 
-        uint64_t PROBE_COUNTER = 0, CMP_COUNTER = 0;
+        uint64_t PROBE_COUNTER, CMP_COUNTER;
 
-        virtual std::span<TKey> GetKeysForCmp()
+        void SetupDirtyEntries()
+        {
+            uint8_t array[sizeof(TEntry)];
+
+            for (uint32_t i = 0; i < sizeof(TEntry); i++)
+            {
+                array[i] = static_cast<uint8_t>(i + 1);
+            }
+
+            for (uint32_t i = 0; i < _Capacity; i++)
+            {
+                _entries[i] = *reinterpret_cast<TEntry*>(array);
+            }
+        }
+
+        std::span<TKey> GetKeysForCmp()
         {
             auto ptr = (TKey*)_entries;
 
             for (uint32_t i = 0; i < _Capacity; i++)
             {
-                if (_controls[i] == 0) continue;
+                if (_controls[i] == static_cast<int8_t>(EMPTY_VALUE)) continue;
 
                 *ptr = _entries[i].key; ptr++;
             }
@@ -152,34 +147,61 @@ namespace MZ
 
             if (_Capacity > static_cast<uint32_t>(MAX_SIZE)) _Capacity = MAX_SIZE;
 
-            _controlsPtr.reset(new std::vector<uint8_t>(_Capacity + 16));
+            _controlsPtr.reset(_controls = new int8_t[_Capacity + VECTOR_SIZE]);
 
-            _entriesPtr.reset(new std::vector<TEntry>(_Capacity + 16));
+            _entriesPtr.reset(_entries = new TEntry[_Capacity + VECTOR_SIZE]);
 
-            std::fill(_controlsPtr->begin(), _controlsPtr->end(), 0);
-
-            _controls = _controlsPtr->data();
-
-            _entries = _entriesPtr->data();
-
-            _MaxProbe = (2 * _Capacity - 256) / 16;
+            _MaxProbe = (2 * _Capacity - (VECTOR_SIZE * VECTOR_SIZE)) / VECTOR_SIZE;
 
             _CapacityMask = _Capacity - 1;
 
-            _Capacity = static_cast<uint32_t>(_controlsPtr->size());
+            _Capacity += VECTOR_SIZE;
 
-            _Count = 0;
+            Clear();
+        }
+
+        static const auto VECTOR_SIZE = static_cast<uint8_t>(16);
+
+        static const __forceinline int FindFirstEmptyOrDirty(uint64_t* vector16)
+        {
+            if ((vector16[0] >> 7) & 1) return 0;
+            if ((vector16[0] >> 15) & 1) return 1;
+            if ((vector16[0] >> 23) & 1) return 2;
+            if ((vector16[0] >> 31) & 1) return 3;
+            if ((vector16[0] >> 39) & 1) return 4;
+            if ((vector16[0] >> 47) & 1) return 5;
+            if ((vector16[0] >> 55) & 1) return 6;
+            if ((vector16[0] >> 63) & 1) return 7;
+
+            if ((vector16[1] >> 7) & 1) return 8;
+            if ((vector16[1] >> 15) & 1) return 9;
+            if ((vector16[1] >> 23) & 1) return 10;
+            if ((vector16[1] >> 31) & 1) return 11;
+            if ((vector16[1] >> 39) & 1) return 12;
+            if ((vector16[1] >> 47) & 1) return 13;
+            if ((vector16[1] >> 55) & 1) return 14;
+            if ((vector16[1] >> 63) & 1) return 15;
+
+            return -1;
+        }
+
+        /// <summary>
+        /// Retrieves the 7 lowest bits from a index
+        /// </summary>
+        /// <param name="index">index aka HashCode</param>
+        /// <returns>The 7 lowest bits of the index, [0...127]</returns>
+        static const __forceinline char IndexToHashCode(uint64_t index)
+        {
+            return static_cast<char>(index >> 57);
         }
 
         uint32_t _Capacity, _CapacityMask, _MaxProbe, _Count;
 
-        uint8_t* _controls = nullptr;
-        std::unique_ptr<std::vector<uint8_t>> _controlsPtr;
+        int8_t* _controls = nullptr;
+        std::unique_ptr<int8_t> _controlsPtr;
 
         TEntry* _entries = nullptr;
-        std::unique_ptr<std::vector<TEntry>> _entriesPtr;
-
-        //public int EnsureCapacity(int capacity);
+        std::unique_ptr<TEntry> _entriesPtr;
     };
 
     template <typename TKey, typename TValue>

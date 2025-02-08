@@ -1,1 +1,1 @@
-"C:\Program Files\WinRAR\Rar.exe" u -hp1 -m5 DenseMapSimd.rar DenseMapSimd.exe DenseMapSimdF1.exe DenseMapSimdF2.exe testRnd.bat testSeq.bat
+"C:\Program Files\WinRAR\Rar.exe" u -hp1 -m5 DenseMapSimd.rar DenseMapSimd.exe DenseMapSimdF1.exe DenseMapSimdF2.exe testRnd.bat testSeq.bat testAll.bat

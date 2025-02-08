@@ -9,7 +9,7 @@
 
 void ShowVersion(const std::string& cmd, const std::string OptimizationType, bool bTestDataSet)
 {
-    std::cout << "DenseMapSimd, build: 1015 (" << OptimizationType << "), Date: " << __DATE__ << " " << __TIME__ << std::endl;
+    std::cout << "DenseMapSimd, build: 1016 (" << OptimizationType << "), Date: " << __DATE__ << " " << __TIME__ << std::endl;
 
     if (cpuid_present())
     {

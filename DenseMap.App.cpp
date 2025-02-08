@@ -30,11 +30,11 @@ auto defaultLoc = std::cout.getloc();
 template <typename ObjectType, typename KeyType>
 void Bench(uint64_t load, ObjectType& object, bool bTestDataSet)
 {
-    object.Clear();
+    object.Clear(); object.SetupDirtyEntries();
+    
+    object.Test(data_set.data(), 10'000'000);
 
-    object.Test(data_set.data(), 32 * 1024 * 1024);
-
-    object.Clear();
+    object.Clear(); object.SetupDirtyEntries();
 
     const auto t_start = std::chrono::high_resolution_clock::now();
 
@@ -129,7 +129,7 @@ int main(int argc, char** argv)
             bTestDataSet = true;
         }
 
-        if (strcmp(argv[i], "-map") == 0)
+        if (strcmp(argv[i], "-map") == 0 || strcmp(argv[i], "-hm") == 0)
         {
             TypeMask = 1;
         }
@@ -166,7 +166,7 @@ int main(int argc, char** argv)
     {
         std::cout << std::endl;
         std::cout << "DenseMapSimd.exe run [max [min [step]]] [-32|-64] [-all|-map|-ht|-hi] [-test]" << std::endl;
-        std::cout << "-map DenseHashMap, -ht DenseHashTable, -hi DenseHashIndex" << std::endl;
+        std::cout << "-hm DenseHashMap, -ht DenseHashTable, -hi DenseHashIndex" << std::endl;
         std::cout << "-32, -64 key size in bits, -64 by default" << std::endl;
         std::cout << "-test comparison dataset with a set of keys" << std::endl;
 
@@ -175,6 +175,8 @@ int main(int argc, char** argv)
         std::cout << "DenseMapSimd.exe rnd [32|64|128|256] [-seq]" << std::endl;
         std::cout << "32|64|128|256  dataset size in MB, 128 by default" << std::endl;
         std::cout << "-seq, sequential set of numbers" << std::endl;
+
+        std::cout << std::endl;
         return 0;
     }
 
@@ -189,6 +191,8 @@ int main(int argc, char** argv)
         uint8_t mode = (argc > 3 && atoi(argv[3]) >= 0 && atoi(argv[3]) < 5) ? atoi(argv[3]) : 0;
 
         GenerateRandomsToFile(filename, (uint64_t)data_set_size, bSequential);
+
+        std::cout << std::endl;
 
         return 0;
     }
@@ -222,19 +226,8 @@ int main(int argc, char** argv)
     using Type82 = MZ::DenseHashIndex<uint32_t>;
     using Type84 = MZ::DenseHashTable<uint32_t>;
 
-    std::unique_ptr<Type01> ptr01;
-    std::unique_ptr<Type02> ptr02;
-    std::unique_ptr<Type04> ptr04;
-
-    std::unique_ptr<Type81> ptr81;
-    std::unique_ptr<Type82> ptr82;
-    std::unique_ptr<Type84> ptr84;
-
     for (uint32_t iType = 1; iType <= 4; iType <<= 1)
     {
-        ptr01.reset(); ptr02.reset(); ptr04.reset();
-        ptr81.reset(); ptr82.reset(); ptr84.reset();
-
         if ((iType & TypeMask) == 0) continue;
 
         std::cout << std::endl;
@@ -242,27 +235,21 @@ int main(int argc, char** argv)
         switch ((iType & TypeMask) | KeySizeMask)
         {
         case 0x01:
-            ptr01.reset(new Type01((int32_t)data_set.size()));
-            std::cout << "-map, DenseHashMap<uint64_t, uint32_t>::Add(key)" << std::endl;
+            std::cout << "-hm, DenseHashMap<uint64_t, uint32_t>::Add(key)" << std::endl;
             break;
         case 0x81:
-            ptr81.reset(new Type81((int32_t)data_set.size()));
-            std::cout << "-map, DenseHashMap<uint32_t, uint32_t>::Add(key)" << std::endl;
+            std::cout << "-hm, DenseHashMap<uint32_t, uint32_t>::Add(key)" << std::endl;
             break;
         case 0x02:
-            ptr02.reset(new Type02((int32_t)data_set.size()));
             std::cout << "-hi, DenseHashIndex<uint64_t>::Add(key)" << std::endl;
             break;
         case 0x82:
-            ptr82.reset(new Type82((int32_t)data_set.size()));
             std::cout << "-hi, DenseHashIndex<uint32_t>::Add(key)" << std::endl;
             break;
         case 0x04:
-            ptr04.reset(new Type04((int32_t)data_set.size()));
             std::cout << "-ht, DenseHashTable<uint64_t>::Add(key)" << std::endl;
             break;
         case 0x84:
-            ptr84.reset(new Type84((int32_t)data_set.size()));
             std::cout << "-ht, DenseHashTable<uint32_t>::Add(key)" << std::endl;
             break;
         }
@@ -272,29 +259,49 @@ int main(int argc, char** argv)
             switch ((iType & TypeMask) | KeySizeMask)
             {
             case 0x01:
-                Bench<Type01, uint64_t>(load, *ptr01, bTestDataSet);
+            {
+                Type01 object01((int32_t)data_set.size());
+                Bench<Type01, uint64_t>(load, object01, bTestDataSet);
+            }
                 break;
             case 0x81:
-                Bench<Type81, uint32_t>(load, *ptr81, bTestDataSet);
+            {
+                Type81 object81((int32_t)data_set.size());
+                Bench<Type81, uint32_t>(load, object81, bTestDataSet);
+            }
                 break;
             case 0x02:
-                Bench<Type02, uint64_t>(load, *ptr02, bTestDataSet);
+            {
+                Type02 object02((int32_t)data_set.size());
+                Bench<Type02, uint64_t>(load, object02, bTestDataSet);
+            }
                 break;
             case 0x82:
-                Bench<Type82, uint32_t>(load, *ptr82, bTestDataSet);
+            {
+                Type82 object82((int32_t)data_set.size());
+                Bench<Type82, uint32_t>(load, object82, bTestDataSet);
+            }
                 break;
             case 0x04:
-                Bench<Type04, uint64_t>(load, *ptr04, bTestDataSet);
+            {
+                Type04 object04((int32_t)data_set.size());
+                Bench<Type04, uint64_t>(load, object04, bTestDataSet);
+            }
                 break;
             case 0x84:
-                Bench<Type84, uint32_t>(load, *ptr84, bTestDataSet);
+            {
+                Type84 object84((int32_t)data_set.size());
+                Bench<Type84, uint32_t>(load, object84, bTestDataSet);
+            }
                 break;
             }
 
             if (bAutoStep)
             {
-                if ((maxLoad - load) < (stepLoad / 2)) load -= stepLoad / 4;
+                
             }
         }
+
+        std::cout << std::endl;
     }
 }

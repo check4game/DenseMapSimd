@@ -299,10 +299,17 @@
     <Text Include="Results.1015\i7-10700K.128.seq.ht.log" />
     <Text Include="Results.1015\Ryzen 7 9700X.128.rnd.ht.log" />
     <Text Include="Results.1015\Ryzen 7 9700X.128.seq.ht.log" />
+    <Text Include="Results.1016\i5-10600K.128.rnd.ht.log" />
+    <Text Include="Results.1016\i5-10600K.128.seq.ht.log" />
+    <Text Include="Results.1016\i5-11500.128.rnd.ht.log" />
+    <Text Include="Results.1016\i5-11500.128.seq.ht.log" />
+    <Text Include="Results.1016\i7-10700K.128.rnd.ht.log" />
+    <Text Include="Results.1016\i7-10700K.128.seq.ht.log" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
     <None Include="x64\rar.bat" />
+    <None Include="x64\testAll.bat" />
     <None Include="x64\testRnd.bat" />
     <None Include="x64\testSeq.bat" />
   </ItemGroup>

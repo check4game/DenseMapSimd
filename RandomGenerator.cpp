@@ -10,7 +10,7 @@ using namespace std::chrono;
 
 std::vector<int> vector_data_set_size = { 32, 64, 128, 256 };
 
-std::vector<uint64_t> buffer(16 * 1024);
+std::vector<uint64_t> buffer(128 * 1024);
 
 #include "includes/Judy.h"
 

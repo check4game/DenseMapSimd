@@ -20,6 +20,9 @@
     <Filter Include="X64">
       <UniqueIdentifier>{94ecf10a-9c5f-4ec2-96d9-8a013310ed5d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Results.1016">
+      <UniqueIdentifier>{f7d4fa79-3c6a-481c-941f-be9835fd22f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Results.1015\i5-11500.128.rnd.ht.log">
@@ -41,6 +44,24 @@
       <Filter>Results.1015</Filter>
     </Text>
     <Text Include="LICENSE.txt" />
+    <Text Include="Results.1016\i5-10600K.128.rnd.ht.log">
+      <Filter>Results.1016</Filter>
+    </Text>
+    <Text Include="Results.1016\i5-10600K.128.seq.ht.log">
+      <Filter>Results.1016</Filter>
+    </Text>
+    <Text Include="Results.1016\i5-11500.128.rnd.ht.log">
+      <Filter>Results.1016</Filter>
+    </Text>
+    <Text Include="Results.1016\i5-11500.128.seq.ht.log">
+      <Filter>Results.1016</Filter>
+    </Text>
+    <Text Include="Results.1016\i7-10700K.128.rnd.ht.log">
+      <Filter>Results.1016</Filter>
+    </Text>
+    <Text Include="Results.1016\i7-10700K.128.seq.ht.log">
+      <Filter>Results.1016</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="x64\rar.bat">
@@ -53,5 +74,8 @@
       <Filter>X64</Filter>
     </None>
     <None Include="README.md" />
+    <None Include="x64\testAll.bat">
+      <Filter>X64</Filter>
+    </None>
   </ItemGroup>
 </Project>
