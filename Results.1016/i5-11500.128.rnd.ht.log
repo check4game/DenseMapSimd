@@ -1,0 +1,119 @@
+DenseMapSimd, build: 1016 (optimal), Date: Feb  8 2025 17:22:10
+11th Gen Intel(R) Core(TM) i5-11500 @ 2.70GHz, Rocket Lake (Core i5), 6/12, 2.712GHz
+generate 134.217.728 Unique Random set of numbers to 'DenseMap.64.dat' ..........................
+time: 20.169 s, size: 134.217.728, MemUsed: 260 MB
+
+DenseMapSimd, build: 1016 (optimal), Date: Feb  8 2025 17:22:10
+11th Gen Intel(R) Core(TM) i5-11500 @ 2.70GHz, Rocket Lake (Core i5), 6/12, 2.712GHz
+load from 'DenseMap.64.dat', time: 0.607 s, size: 134.217.728, Unique Random set of numbers
+
+-ht, DenseHashTable<uint64_t>::Add(key)
+time: 0.228s, load: 0.0745, cnt:  10.000.000, op: 22ns, probe:          0, cmp:     46.733
+time: 0.461s, load: 0.1490, cnt:  20.000.000, op: 23ns, probe:          0, cmp:    185.958
+time: 0.691s, load: 0.2235, cnt:  30.000.000, op: 23ns, probe:          2, cmp:    419.164
+time: 0.929s, load: 0.2980, cnt:  40.000.000, op: 23ns, probe:         31, cmp:    745.837
+time: 1.171s, load: 0.3725, cnt:  50.000.000, op: 23ns, probe:        633, cmp:  1.163.342
+time: 1.396s, load: 0.4470, cnt:  60.000.000, op: 23ns, probe:      6.228, cmp:  1.675.674
+time: 1.640s, load: 0.5215, cnt:  70.000.000, op: 23ns, probe:     38.144, cmp:  2.283.628
+time: 1.864s, load: 0.5960, cnt:  80.000.000, op: 23ns, probe:    169.407, cmp:  2.992.009
+time: 2.110s, load: 0.6706, cnt:  90.000.000, op: 23ns, probe:    594.124, cmp:  3.821.132
+time: 2.386s, load: 0.7451, cnt: 100.000.000, op: 23ns, probe:  1.785.219, cmp:  4.822.037
+time: 2.663s, load: 0.8196, cnt: 110.000.000, op: 24ns, probe:  4.849.878, cmp:  6.123.912
+time: 3.070s, load: 0.8941, cnt: 120.000.000, op: 25ns, probe: 12.804.033, cmp:  8.097.436
+time: 3.923s, load: 0.9686, cnt: 130.000.000, op: 30ns, probe: 41.525.926, cmp: 12.720.545
+
+DenseMapSimd, build: 1016 (fix1), Date: Feb  8 2025 17:22:33
+11th Gen Intel(R) Core(TM) i5-11500 @ 2.70GHz, Rocket Lake (Core i5), 6/12, 2.712GHz
+load from 'DenseMap.64.dat', time: 0.613 s, size: 134.217.728, Unique Random set of numbers
+
+-ht, DenseHashTable<uint64_t>::Add(key)
+time: 0.200s, load: 0.0745, cnt:  10.000.000, op: 20ns, probe:          0, cmp:     46.733
+time: 0.414s, load: 0.1490, cnt:  20.000.000, op: 20ns, probe:          0, cmp:    185.958
+time: 0.632s, load: 0.2235, cnt:  30.000.000, op: 21ns, probe:          2, cmp:    419.164
+time: 0.867s, load: 0.2980, cnt:  40.000.000, op: 21ns, probe:         31, cmp:    745.837
+time: 1.114s, load: 0.3725, cnt:  50.000.000, op: 22ns, probe:        633, cmp:  1.163.342
+time: 1.387s, load: 0.4470, cnt:  60.000.000, op: 23ns, probe:      6.228, cmp:  1.675.674
+time: 1.650s, load: 0.5215, cnt:  70.000.000, op: 23ns, probe:     38.144, cmp:  2.283.628
+time: 1.924s, load: 0.5960, cnt:  80.000.000, op: 24ns, probe:    169.407, cmp:  2.992.009
+time: 2.177s, load: 0.6706, cnt:  90.000.000, op: 24ns, probe:    594.124, cmp:  3.821.132
+time: 2.475s, load: 0.7451, cnt: 100.000.000, op: 24ns, probe:  1.785.219, cmp:  4.822.037
+time: 2.793s, load: 0.8196, cnt: 110.000.000, op: 25ns, probe:  4.849.878, cmp:  6.123.912
+time: 3.206s, load: 0.8941, cnt: 120.000.000, op: 26ns, probe: 12.804.033, cmp:  8.097.436
+time: 4.077s, load: 0.9686, cnt: 130.000.000, op: 31ns, probe: 41.525.926, cmp: 12.720.545
+
+DenseMapSimd, build: 1016 (fix2), Date: Feb  8 2025 17:22:22
+11th Gen Intel(R) Core(TM) i5-11500 @ 2.70GHz, Rocket Lake (Core i5), 6/12, 2.712GHz
+load from 'DenseMap.64.dat', time: 0.61 s, size: 134.217.728, Unique Random set of numbers
+
+-ht, DenseHashTable<uint64_t>::Add(key)
+time: 0.211s, load: 0.0745, cnt:  10.000.000, op: 21ns, probe:          0, cmp:     46.733
+time: 0.436s, load: 0.1490, cnt:  20.000.000, op: 21ns, probe:          0, cmp:    185.958
+time: 0.711s, load: 0.2235, cnt:  30.000.000, op: 23ns, probe:          2, cmp:    419.164
+time: 0.963s, load: 0.2980, cnt:  40.000.000, op: 24ns, probe:         31, cmp:    745.837
+time: 1.215s, load: 0.3725, cnt:  50.000.000, op: 24ns, probe:        633, cmp:  1.163.342
+time: 1.532s, load: 0.4470, cnt:  60.000.000, op: 25ns, probe:      6.228, cmp:  1.675.674
+time: 1.880s, load: 0.5215, cnt:  70.000.000, op: 26ns, probe:     38.144, cmp:  2.283.628
+time: 2.249s, load: 0.5960, cnt:  80.000.000, op: 28ns, probe:    169.407, cmp:  2.992.009
+time: 2.689s, load: 0.6706, cnt:  90.000.000, op: 29ns, probe:    594.124, cmp:  3.821.132
+time: 3.136s, load: 0.7451, cnt: 100.000.000, op: 31ns, probe:  1.785.219, cmp:  4.822.037
+time: 3.672s, load: 0.8196, cnt: 110.000.000, op: 33ns, probe:  4.849.878, cmp:  6.123.912
+time: 4.363s, load: 0.8941, cnt: 120.000.000, op: 36ns, probe: 12.804.033, cmp:  8.097.436
+time: 5.321s, load: 0.9686, cnt: 130.000.000, op: 40ns, probe: 41.525.926, cmp: 12.720.545
+
+DenseMapSimd, build: 1016 (optimal), Date: Feb  8 2025 17:22:10
+11th Gen Intel(R) Core(TM) i5-11500 @ 2.70GHz, Rocket Lake (Core i5), 6/12, 2.712GHz
+load from 'DenseMap.64.dat', time: 0.614 s, size: 134.217.728, Unique Random set of numbers
+
+-ht, DenseHashTable<uint32_t>::Add(key)
+time: 0.219s, load: 0.0745, cnt:  10.000.000, op: 21ns, probe:          0, cmp:     37.412
+time: 0.444s, load: 0.1490, cnt:  20.000.000, op: 22ns, probe:          0, cmp:    149.348
+time: 0.654s, load: 0.2235, cnt:  30.000.000, op: 21ns, probe:          2, cmp:    335.381
+time: 0.877s, load: 0.2980, cnt:  40.000.000, op: 21ns, probe:         21, cmp:    594.769
+time: 1.116s, load: 0.3725, cnt:  50.000.000, op: 22ns, probe:        546, cmp:    928.150
+time: 1.332s, load: 0.4470, cnt:  60.000.000, op: 22ns, probe:      5.532, cmp:  1.334.948
+time: 1.560s, load: 0.5215, cnt:  70.000.000, op: 22ns, probe:     34.721, cmp:  1.816.090
+time: 1.780s, load: 0.5960, cnt:  80.000.000, op: 22ns, probe:    155.801, cmp:  2.378.766
+time: 2.005s, load: 0.6706, cnt:  90.000.000, op: 22ns, probe:    557.339, cmp:  3.040.257
+time: 2.238s, load: 0.7451, cnt: 100.000.000, op: 22ns, probe:  1.691.572, cmp:  3.851.959
+time: 2.687s, load: 0.8196, cnt: 110.000.000, op: 24ns, probe:  4.641.406, cmp:  4.937.264
+time: 2.880s, load: 0.8941, cnt: 120.000.000, op: 24ns, probe: 12.388.504, cmp:  6.669.088
+time: 3.709s, load: 0.9686, cnt: 130.000.000, op: 28ns, probe: 40.532.297, cmp: 11.008.075
+
+DenseMapSimd, build: 1016 (fix1), Date: Feb  8 2025 17:22:33
+11th Gen Intel(R) Core(TM) i5-11500 @ 2.70GHz, Rocket Lake (Core i5), 6/12, 2.712GHz
+load from 'DenseMap.64.dat', time: 0.613 s, size: 134.217.728, Unique Random set of numbers
+
+-ht, DenseHashTable<uint32_t>::Add(key)
+time: 0.197s, load: 0.0745, cnt:  10.000.000, op: 19ns, probe:          0, cmp:     37.412
+time: 0.420s, load: 0.1490, cnt:  20.000.000, op: 21ns, probe:          0, cmp:    149.348
+time: 0.633s, load: 0.2235, cnt:  30.000.000, op: 21ns, probe:          2, cmp:    335.381
+time: 0.858s, load: 0.2980, cnt:  40.000.000, op: 21ns, probe:         21, cmp:    594.769
+time: 1.097s, load: 0.3725, cnt:  50.000.000, op: 21ns, probe:        546, cmp:    928.150
+time: 1.321s, load: 0.4470, cnt:  60.000.000, op: 22ns, probe:      5.532, cmp:  1.334.948
+time: 1.599s, load: 0.5215, cnt:  70.000.000, op: 22ns, probe:     34.721, cmp:  1.816.090
+time: 1.859s, load: 0.5960, cnt:  80.000.000, op: 23ns, probe:    155.801, cmp:  2.378.766
+time: 2.116s, load: 0.6706, cnt:  90.000.000, op: 23ns, probe:    557.339, cmp:  3.040.257
+time: 2.420s, load: 0.7451, cnt: 100.000.000, op: 24ns, probe:  1.691.572, cmp:  3.851.959
+time: 2.690s, load: 0.8196, cnt: 110.000.000, op: 24ns, probe:  4.641.406, cmp:  4.937.264
+time: 3.076s, load: 0.8941, cnt: 120.000.000, op: 25ns, probe: 12.388.504, cmp:  6.669.088
+time: 3.892s, load: 0.9686, cnt: 130.000.000, op: 29ns, probe: 40.532.297, cmp: 11.008.075
+
+DenseMapSimd, build: 1016 (fix2), Date: Feb  8 2025 17:22:22
+11th Gen Intel(R) Core(TM) i5-11500 @ 2.70GHz, Rocket Lake (Core i5), 6/12, 2.712GHz
+load from 'DenseMap.64.dat', time: 0.624 s, size: 134.217.728, Unique Random set of numbers
+
+-ht, DenseHashTable<uint32_t>::Add(key)
+time: 0.205s, load: 0.0745, cnt:  10.000.000, op: 20ns, probe:          0, cmp:     37.412
+time: 0.442s, load: 0.1490, cnt:  20.000.000, op: 22ns, probe:          0, cmp:    149.348
+time: 0.669s, load: 0.2235, cnt:  30.000.000, op: 22ns, probe:          2, cmp:    335.381
+time: 0.920s, load: 0.2980, cnt:  40.000.000, op: 23ns, probe:         21, cmp:    594.769
+time: 1.202s, load: 0.3725, cnt:  50.000.000, op: 24ns, probe:        546, cmp:    928.150
+time: 1.542s, load: 0.4470, cnt:  60.000.000, op: 25ns, probe:      5.532, cmp:  1.334.948
+time: 1.765s, load: 0.5215, cnt:  70.000.000, op: 25ns, probe:     34.721, cmp:  1.816.090
+time: 2.167s, load: 0.5960, cnt:  80.000.000, op: 27ns, probe:    155.801, cmp:  2.378.766
+time: 2.575s, load: 0.6706, cnt:  90.000.000, op: 28ns, probe:    557.339, cmp:  3.040.257
+time: 2.993s, load: 0.7451, cnt: 100.000.000, op: 29ns, probe:  1.691.572, cmp:  3.851.959
+time: 3.504s, load: 0.8196, cnt: 110.000.000, op: 31ns, probe:  4.641.406, cmp:  4.937.264
+time: 4.114s, load: 0.8941, cnt: 120.000.000, op: 34ns, probe: 12.388.504, cmp:  6.669.088
+time: 5.125s, load: 0.9686, cnt: 130.000.000, op: 39ns, probe: 40.532.297, cmp: 11.008.075
+
