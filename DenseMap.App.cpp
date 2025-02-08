@@ -16,7 +16,7 @@ using namespace std::chrono;
 
 extern void LoadRandomsFromFile(const std::string& filename, std::vector<uint64_t>& data_set);
 extern void GenerateRandomsToFile(const std::string& filename, uint64_t data_set_size, bool bSequential);
-extern void ShowVersion(const std::string& cmd, const std::string OptimizationType, bool bTestDataSet);
+extern void ShowVersion(const std::string& cmd, const std::string DenseOptimization, uint32_t DenseBuild, bool bTestDataSet);
 
 struct separate_thousands : std::numpunct<char> {
     char_type do_thousands_sep() const override { return '.'; }  // separate with commas
@@ -160,7 +160,7 @@ int main(int argc, char** argv)
         }
     }
 
-    ShowVersion(cmd, MZ::GetOptimizationType(), bTestDataSet);
+    ShowVersion(cmd, MZ::DenseOptimization, MZ::DenseBuild, bTestDataSet);
 
     if (cmd == "help")
     {

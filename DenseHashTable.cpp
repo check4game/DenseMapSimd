@@ -8,6 +8,15 @@
 #undef DENSE_TEMPLATE
 #undef DENSE_HASHTABLE
 
+#define DENSE_UNIQUE
+#define DENSE_HASHTABLE
+#define DENSE_TEMPLATE typename TKey
+#define DENSE_FUNCTION void __forceinline MZ::DenseHashTable<TKey>::AddUnique(TKey key)
+#include "DenseMap.Add.cpp"
+#undef DENSE_FUNCTION
+#undef DENSE_TEMPLATE
+#undef DENSE_HASHTABLE
+#undef DENSE_UNIQUE
 
 #define DENSE_TEMPLATE typename TKey
 #define DENSE_FUNCTION bool __forceinline MZ::DenseHashTable<TKey>::Contains(TKey key)

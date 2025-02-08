@@ -18,6 +18,8 @@ DENSE_FUNCTION
 
         const auto source = _mm_loadu_si128((const __m128i*)(__super::_controls + index));
 
+#if !defined(DENSE_UNIQUE)
+
         auto resultMask = static_cast<uint64_t>(_mm_movemask_epi8(_mm_cmpeq_epi8(source, target)));
 
     #if defined(DENSE_FIX1) || defined(DENSE_FIX2)
@@ -71,6 +73,7 @@ DENSE_FUNCTION
 
             resultMask = ResetLowestSetBit(resultMask);
         }
+#endif
 
         uint64_t emptyMask = static_cast<uint64_t>(_mm_movemask_epi8(_mm_cmpeq_epi8(source, EMPTY_VECTOR)));
         emptyMask |= static_cast<uint64_t>(_mm_movemask_epi8(_mm_cmpeq_epi8(source, DIRTY_VECTOR)));
@@ -107,11 +110,15 @@ DENSE_FUNCTION
         #endif
             __super::_Count++;
 
+#if defined(DENSE_UNIQUE)
+            return;
+#else
         #if defined(DENSE_HASHINDEX)
             return entry.value;
         #else
             return true;
         #endif
+#endif
         }
 
         #if defined(DENSE_DEBUG)
@@ -122,5 +129,9 @@ DENSE_FUNCTION
         index += jumpDistance; // Move the index forward by the jump distance.           
     }
 
+#if defined(DENSE_UNIQUE)
+    return;
+#else
     return false;
+#endif
 }

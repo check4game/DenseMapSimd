@@ -10,16 +10,15 @@
 
 namespace MZ
 {
-    static const std::string GetOptimizationType()
-    {
+    static const uint32_t DenseBuild = 1017;
+
 #if defined(DENSE_FIX1)
-        return "fix1";
+    static const std::string DenseOptimization = "fix1";
 #elif defined(DENSE_FIX2)
-        return "fix2";
+    static const std::string DenseOptimization = "fix2";
 #else
-        return "optimal";
+    static const std::string DenseOptimization = "optimal";
 #endif
-    }
 
     static __forceinline uint64_t ResetLowestSetBit(uint64_t value)
     {
@@ -211,6 +210,7 @@ namespace MZ
         DenseHashMap(int32_t size) : DenseMap<TKey, TValue, KeyValueEntry<TKey, TValue>>(size) {}
 
         bool __forceinline Add(TKey key, TValue value);
+        void __forceinline AddUnique(TKey key, TValue value);
         bool __forceinline AddOrUpdate(TKey key, TValue value);
         bool __forceinline TryGetValue(TKey key, TValue& value);
         bool __forceinline Remove(TKey key);
@@ -234,6 +234,7 @@ namespace MZ
         DenseHashIndex(int32_t size) : DenseMap<TKey, uint32_t, KeyValueEntry<TKey, uint32_t>>(size) {}
 
         uint32_t __forceinline AddOrGet(TKey key);
+        void __forceinline AddUnique(TKey key);
         uint32_t __forceinline Get(TKey key);
 
 #if defined(DENSE_DEBUG)
@@ -252,6 +253,7 @@ namespace MZ
         DenseHashTable(int32_t size) : DenseMap<TKey, uint32_t, KeyEntry<TKey>>(size) {}
 
         bool __forceinline Add(TKey key);
+        void __forceinline AddUnique(TKey key);
         bool __forceinline Contains(TKey key);
         bool __forceinline Remove(TKey key);
 

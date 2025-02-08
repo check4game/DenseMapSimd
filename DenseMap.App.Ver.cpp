@@ -7,9 +7,9 @@
 
 #pragma comment(lib, "libs/libcpuid.lib")
 
-void ShowVersion(const std::string& cmd, const std::string OptimizationType, bool bTestDataSet)
+void ShowVersion(const std::string& cmd, const std::string DenseOptimization, uint32_t DenseBuild, bool bTestDataSet)
 {
-    std::cout << "DenseMapSimd, build: 1016 (" << OptimizationType << "), Date: " << __DATE__ << " " << __TIME__ << std::endl;
+    std::cout << "DenseMapSimd, build: " << DenseBuild << " (" << DenseOptimization << "), Date: " << __DATE__ << " " << __TIME__ << std::endl;
 
     if (cpuid_present())
     {
