@@ -120,7 +120,7 @@ namespace MZ
 
             for (uint32_t i = 0; i < _Capacity; i++)
             {
-                if (_controls[i] == static_cast<int8_t>(EMPTY_VALUE)) continue;
+                if (_controls[i] <= DIRTY_VALUE) continue;
 
                 *ptr = _entries[i].key; ptr++;
             }
