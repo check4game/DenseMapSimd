@@ -129,7 +129,7 @@ int main(int argc, char** argv)
             bTestDataSet = true;
         }
 
-        if (strcmp(argv[i], "-map") == 0 || strcmp(argv[i], "-hm") == 0)
+        if (strcmp(argv[i], "-hm") == 0)
         {
             TypeMask = 1;
         }
@@ -160,13 +160,13 @@ int main(int argc, char** argv)
         }
     }
 
-    ShowVersion(cmd, MZ::DenseOptimization, MZ::DenseBuild, bTestDataSet);
+    ShowVersion(cmd, MZ::DenseMap::Optimization, MZ::DenseMap::Build, bTestDataSet);
 
     if (cmd == "help")
     {
         std::cout << std::endl;
         std::cout << "DenseMapSimd.exe run [max [min [step]]] [-32|-64] [-all|-map|-ht|-hi] [-test]" << std::endl;
-        std::cout << "-hm DenseHashMap, -ht DenseHashTable, -hi DenseHashIndex" << std::endl;
+        std::cout << "-hm HashMap, -ht HashTable, -hi HashIndex" << std::endl;
         std::cout << "-32, -64 key size in bits, -64 by default" << std::endl;
         std::cout << "-test comparison dataset with a set of keys" << std::endl;
 
@@ -218,13 +218,13 @@ int main(int argc, char** argv)
         stepLoad = (uint64_t)(atof(argv[4]) * 1000 * 1000); bAutoStep = false;
     }
 
-    using Type01 = MZ::DenseHashMap<uint64_t, uint32_t>;
-    using Type02 = MZ::DenseHashIndex<uint64_t>;
-    using Type04 = MZ::DenseHashTable<uint64_t>;
+    using Type01 = MZ::DenseMap::HashMap<uint64_t, uint32_t>;
+    using Type02 = MZ::DenseMap::HashIndex<uint64_t>;
+    using Type04 = MZ::DenseMap::HashTable<uint64_t>;
 
-    using Type81 = MZ::DenseHashMap<uint32_t, uint32_t>;
-    using Type82 = MZ::DenseHashIndex<uint32_t>;
-    using Type84 = MZ::DenseHashTable<uint32_t>;
+    using Type81 = MZ::DenseMap::HashMap<uint32_t, uint32_t>;
+    using Type82 = MZ::DenseMap::HashIndex<uint32_t>;
+    using Type84 = MZ::DenseMap::HashTable<uint32_t>;
 
     for (uint32_t iType = 1; iType <= 4; iType <<= 1)
     {
@@ -235,22 +235,22 @@ int main(int argc, char** argv)
         switch ((iType & TypeMask) | KeySizeMask)
         {
         case 0x01:
-            std::cout << "-hm, DenseHashMap<uint64_t, uint32_t>::Add(key)" << std::endl;
+            std::cout << "-hm, HashMap<uint64_t, uint32_t>::Add(key)" << std::endl;
             break;
         case 0x81:
-            std::cout << "-hm, DenseHashMap<uint32_t, uint32_t>::Add(key)" << std::endl;
+            std::cout << "-hm, HashMap<uint32_t, uint32_t>::Add(key)" << std::endl;
             break;
         case 0x02:
-            std::cout << "-hi, DenseHashIndex<uint64_t>::Add(key)" << std::endl;
+            std::cout << "-hi, HashIndex<uint64_t>::Add(key)" << std::endl;
             break;
         case 0x82:
-            std::cout << "-hi, DenseHashIndex<uint32_t>::Add(key)" << std::endl;
+            std::cout << "-hi, HashIndex<uint32_t>::Add(key)" << std::endl;
             break;
         case 0x04:
-            std::cout << "-ht, DenseHashTable<uint64_t>::Add(key)" << std::endl;
+            std::cout << "-ht, HashTable<uint64_t>::Add(key)" << std::endl;
             break;
         case 0x84:
-            std::cout << "-ht, DenseHashTable<uint32_t>::Add(key)" << std::endl;
+            std::cout << "-ht, Map::HashTable<uint32_t>::Add(key)" << std::endl;
             break;
         }
 

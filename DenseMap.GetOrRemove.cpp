@@ -39,7 +39,11 @@ DENSE_FUNCTION
             }
             #endif
         #else
+            #if defined(DENSE_HASHTABLE)
+            if (key == __super::_entries[index])
+            #else
             if (key == __super::_entries[index].key)
+            #endif
             {
             #if defined(DENSE_REMOVE)
                 __super::_controls[index] = DIRTY_VALUE; __super::_Count--;
@@ -72,12 +76,17 @@ DENSE_FUNCTION
 
         #elif defined(DENSE_REMOVE)
             auto pos = TrailingZeroCount(resultMask);
-
+            #if defined(DENSE_HASHTABLE)
+            if (key == __super::_entries[index + pos])
+            #else
             if (key == __super::_entries[index + pos].key)
+            #endif
             {
                 __super::_controls[index + pos] = DIRTY_VALUE; __super::_Count--; return true;
             }
-        #else    
+        #elif defined(DENSE_HASHTABLE)
+            if (key == __super::_entries[index + TrailingZeroCount(resultMask)]) return true;
+        #else
             if (key == __super::_entries[index + TrailingZeroCount(resultMask)].key) return true;
         #endif
 

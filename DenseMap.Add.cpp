@@ -40,6 +40,8 @@ DENSE_FUNCTION
         #elif defined(DENSE_HASHINDEX)
             const auto& entry = __super::_entries[index];
             if (key == entry.key) return entry.value | KEY_EXIST_MASK;
+        #elif defined(DENSE_HASHTABLE)
+            if (key == __super::_entries[index]) return false;
         #else
             if (key == __super::_entries[index].key) return false;
         #endif
@@ -67,6 +69,8 @@ DENSE_FUNCTION
             const auto& entry = __super::_entries[index + TrailingZeroCount(resultMask)];
 
             if (key == entry.key) return entry.value | KEY_EXIST_MASK;
+        #elif defined(DENSE_HASHTABLE)
+            if (key == __super::_entries[index + TrailingZeroCount(resultMask)]) return false;
         #else
             if (key == __super::_entries[index + TrailingZeroCount(resultMask)].key) return false;
         #endif
@@ -95,7 +99,7 @@ DENSE_FUNCTION
             __super::_controls[index] = hashCode;
 
         #if defined(DENSE_HASHTABLE)
-            __super::_entries[index].key = key;
+            __super::_entries[index] = key;
         #else
             auto& entry = __super::_entries[index];
 
